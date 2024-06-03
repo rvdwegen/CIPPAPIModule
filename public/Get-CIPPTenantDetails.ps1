@@ -1,4 +1,4 @@
-function Get-TenantDetails {
+function Get-CIPPTenantDetails {
     [CmdletBinding()]
         Param(
             [Parameter(Mandatory = $true)]
