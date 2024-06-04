@@ -13,7 +13,7 @@ function Get-CIPPUsers {
         break
     }
     
-    if ($null -eq $UserID) {
+    if (-not $UserID) {
         Write-Host "Getting all users for tenant $CustomerTenantID" -ForegroundColor Green
         $Users = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/Listusers?tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
     } else {

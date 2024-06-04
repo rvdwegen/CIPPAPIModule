@@ -14,7 +14,8 @@ function Invoke-CIPPPreFlightCheck {
     elseif ($script:ExpiryDateTime -lt (Get-Date)) {
         write-warning "Token has expired. Reconnecting to CIPP."
         Connect-CIPP -CIPPClientID $script:CIPPClientID -CIPPClientSecret $script:CIPPClientSecret -CIPPAPIUrl $script:CIPPAPIUrl -TenantID $TenantID
-    } else {
-        Write-Host "Token is still valid. Expiry: $script:ExpiryDateTime" -ForegroundColor Green
-    }
+    } 
+    #else {
+    #    Write-Host "Token is still valid. Expiry: $script:ExpiryDateTime" -ForegroundColor Green
+    #}
 }
