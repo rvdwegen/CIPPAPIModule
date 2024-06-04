@@ -21,6 +21,5 @@ function Get-TokenExpiry {
     } else {
         $Script:ExpiryDateTime = $script:TokenAcquiredTime.AddSeconds($script:ExpiresIn)
         Write-Verbose "Calcuated token expiry as $Script:ExpiryDateTime"
-        Return $script:ExpiryDateTime
     }
 }
