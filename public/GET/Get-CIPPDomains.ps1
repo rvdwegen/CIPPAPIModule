@@ -12,8 +12,18 @@ function Get-CIPPDomains {
     }
     
     Write-Host "Getting Domains for customer: $CustomerTenantID" -ForegroundColor Green
+
+    # Define the endpoint and parameters
+    $endpoint = "/api/ListDomains"
+    $params = @{
+        tenantfilter = $CustomerTenantID
+    }
+
+    # Build the full URL with query parameters
+    $url = Build-Url -Endpoint $endpoint -Params $params
+
     $request = @{
-        Uri = "$script:CIPPAPIUrl/api/ListDomains?tenantfilter=$CustomerTenantID"
+        Uri = $url
         Method = 'Get'
         Headers = $script:AuthHeader
         ContentType = 'application/json'
