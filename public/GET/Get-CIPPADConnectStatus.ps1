@@ -38,41 +38,20 @@ function Get-CIPPADConnectStatus {
         [switch]$AzureADObjectsInError
     )
 
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
-    }
-
-    if ($AzureADConnectSettings){
-        Write-Host "Getting AD Connect Settings for: $CustomerTenantID" -ForegroundColor Green
-        $request = @{
-            URI = "$script:CIPPAPIUrl/api/listazureadconnectstatus?tenantfilter=$CustomerTenantID&datatoreturn=AzureADConnectSettings"
-            Method = 'Get'
-            Headers = $script:AuthHeader
-            ContentType = "application/json"
-        }
-        $ADConnectStatus = Invoke-RestMethod @request
-    } elseif ($AzureADObjectsInError){
-        Write-Host "Getting AD Connect AD Objects in Error for: $CustomerTenantID" -ForegroundColor Green
-        $request = @{
-            URI = "$script:CIPPAPIUrl/api/listazureadconnectstatus?tenantfilter=$CustomerTenantID&datatoreturn=AzureADObjectsInError"
-            Method = 'Get'
-            Headers = $script:AuthHeader
-            ContentType = "application/json"
-        }
-        $ADConnectStatus = Invoke-RestMethod @request
+    if ($AzureADConnectSettings) {
+        Write-Verbose "Getting AD Connect Settings for: $CustomerTenantID"
+    } elseif ($AzureADObjectsInError) {
+        Write-Verbose "Getting AD Objects in Error for: $CustomerTenantID"
     } else {
-        Write-Host "Getting AD Connect Status for: $CustomerTenantID" -ForegroundColor Green
-        $request = @{
-            URI = "$script:CIPPAPIUrl/api/listazureadconnectstatus?tenantfilter=$CustomerTenantID"
-            Method = 'Get'
-            Headers = $script:AuthHeader
-            ContentType = "application/json"
-        }
-        $ADConnectStatus = Invoke-RestMethod @request
+        Write-Verbose "Getting AD Connect Status for: $CustomerTenantID"
     }
-
-    $ADConnectStatus
+        $Endpoint = "/api/listazureadconnectstatus"
+        $Params = @{
+            tenantfilter = $CustomerTenantID
+            datatoreturn = if ($AzureADConnectSettings)
+            { "AzureADConnectSettings"}
+            elseif ($AzureADObjectsInError)
+            { "AzureADObjectsInError"}
+        }
+        Invoke-CIPPRestMethod -Endpoint $Endpoint -Params $Params
 }

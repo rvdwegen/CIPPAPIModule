@@ -6,23 +6,13 @@ function Get-CIPPCalendarPerms {
             [Parameter(Mandatory = $true)]
             [string]$UserID
         )
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
+
+    Write-Verbose "Getting user calender permissions for user: $UserID"
+    $Endpoint = "/api/listcalendarpermissions"
+    $Params = @{
+        tenantfilter = $CustomerTenantID
+        userId = $UserID
     }
-
-    Write-Host "Getting user calender permissions for user: $UserID" -ForegroundColor Green
-    $request = @{
-        Uri = "$script:CIPPAPIUrl/api/listcalendarpermissions?userId=$UserID&tenantfilter=$CustomerTenantID"
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
-    }
-    $CalPerms = Invoke-RestMethod @request
-
-$CalPerms
-
+    Invoke-CIPPRestMethod -Endpoint $Endpoint -Params $Params
 }
 
