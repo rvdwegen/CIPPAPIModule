@@ -15,10 +15,22 @@ function Get-CIPPUsers {
     
     if (-not $UserID) {
         Write-Host "Getting all users for tenant $CustomerTenantID" -ForegroundColor Green
-        $Users = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/Listusers?tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+        $request = @{
+            Uri = "$script:CIPPAPIUrl/api/Listusers?tenantfilter=$CustomerTenantID"
+            Method = 'Get'
+            Headers = $script:AuthHeader
+            ContentType = 'application/json'
+        }
+        $Users = Invoke-RestMethod @request
     } else {
         Write-Host "Getting user details for user $UserID" -ForegroundColor Green
-        $Users = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/Listusers?userId=$UserID&tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+        $request = @{
+            Uri = "$script:CIPPAPIUrl/api/Listusers?userId=$UserID&tenantfilter=$CustomerTenantID"
+            Method = 'Get'
+            Headers = $script:AuthHeader
+            ContentType = 'application/json'
+        }
+        $Users = Invoke-RestMethod @request
     }
 
 $Users

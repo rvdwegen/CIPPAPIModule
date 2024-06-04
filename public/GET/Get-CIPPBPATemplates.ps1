@@ -7,7 +7,13 @@ function Get-CIPPBPATemplates {
     }
     
     Write-Host "Getting BPA Templates" -ForegroundColor Green
-    $BPATemplates = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listbpatemplates" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/listbpatemplates"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $BPATemplates = Invoke-RestMethod @request
     
     $BPATemplates
 

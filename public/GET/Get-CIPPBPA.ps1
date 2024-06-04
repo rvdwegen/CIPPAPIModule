@@ -15,9 +15,21 @@ function Get-CIPPBPA {
     
     Write-Host "Getting BPA Report for customer: $CustomerTenantID" -ForegroundColor Green
     if ($null -eq $ReportName) {
-        $BPA = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listbpa?tenantFilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+        $request = @{
+            Uri = "$script:CIPPAPIUrl/api/listbpa?tenantFilter=$CustomerTenantID"
+            Method = 'Get'
+            Headers = $script:AuthHeader
+            ContentType = 'application/json'
+        }
+        $BPA = Invoke-RestMethod @request
     } else {
-        $BPA = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listbpa?tenantFilter=$CustomerTenantID&Report=$ReportName" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+        $request = @{
+            Uri = "$script:CIPPAPIUrl/api/listbpa?tenantFilter=$CustomerTenantID&Report=$ReportName"
+            Method = 'Get'
+            Headers = $script:AuthHeader
+            ContentType = 'application/json'
+        }
+        $BPA = Invoke-RestMethod @request
     }
 
 $BPA

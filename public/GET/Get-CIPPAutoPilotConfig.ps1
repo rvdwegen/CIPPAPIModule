@@ -15,10 +15,22 @@ function Get-CIPPAutoPilotConfig {
     
     if ($Type -eq "ESP") {
         Write-Host "Getting AutoPilot Status Page for $CustomerTenantID" -ForegroundColor Green
-        $AutoPilotConfig = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listautopilotconfig?tenantfilter=$CustomerTenantID&type=$Type" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+        $request = @{
+            Uri = "$script:CIPPAPIUrl/api/listautopilotconfig?tenantfilter=$CustomerTenantID&type=$Type"
+            Method = 'Get'
+            Headers = $script:AuthHeader
+            ContentType = 'application/json'
+        }
+        $AutoPilotConfig = Invoke-RestMethod @request
     } elseif ($Type -eq "ApProfile"){
         Write-Host "Getting AutoPilot Profile for customer: $CustomerTenantID" -ForegroundColor Green
-        $AutoPilotConfig = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listautopilotconfig?tenantfilter=$CustomerTenantID&type=$Type" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+        $request = @{
+            Uri = "$script:CIPPAPIUrl/api/listautopilotconfig?tenantfilter=$CustomerTenantID&type=$Type"
+            Method = 'Get'
+            Headers = $script:AuthHeader
+            ContentType = 'application/json'
+        }
+        $AutoPilotConfig = Invoke-RestMethod @request
     }
 
 $AutoPilotConfig

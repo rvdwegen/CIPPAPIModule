@@ -12,7 +12,13 @@ function Get-CIPPMailboxes {
     }
     
     Write-Host "Getting Mailbox List for $CustomerTenantID" -ForegroundColor Green
-    $MailboxList = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/ListMailboxes?tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/ListMailboxes?tenantfilter=$CustomerTenantID"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $MailboxList = Invoke-RestMethod @request
 
 $MailboxList
 

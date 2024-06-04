@@ -12,8 +12,14 @@ function Get-CIPPDefenderTVM {
     }
     
     Write-Host "Getting Defender TVM for customer: $CustomerTenantID" -ForegroundColor Green
-    $DefenderTVM = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listdefendertvm?tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
-
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/listdefendertvm?tenantfilter=$CustomerTenantID"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $DefenderTVM = Invoke-RestMethod @request
+    
     $DefenderTVM
 
 }

@@ -12,8 +12,13 @@ function Get-CIPPAppStatus {
     }
     
     Write-Host "Getting Apps Status for $CustomerTenantID" -ForegroundColor Green
-    $AppStatus = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listappstatus?tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
-
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/listappstatus?tenantfilter=$CustomerTenantID"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $AppStatus = Invoke-RestMethod @request
     $AppStatus
 
 }

@@ -12,8 +12,14 @@ function Get-CIPPDefenderState {
     }
     
     Write-Host "Getting Defender State for customer: $CustomerTenantID" -ForegroundColor Green
-    $DefenderState = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listdefenderstate?tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
-
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/listdefenderstate?tenantfilter=$CustomerTenantID"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $DefenderState = Invoke-RestMethod @request
+    
     $DefenderState
 
 }

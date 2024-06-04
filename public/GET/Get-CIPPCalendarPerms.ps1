@@ -13,8 +13,14 @@ function Get-CIPPCalendarPerms {
         break
     }
 
-        Write-Host "Getting user calender permissions for user: $UserID" -ForegroundColor Green
-        $CalPerms = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listcalendarpermissions?userId=$UserID&tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+    Write-Host "Getting user calender permissions for user: $UserID" -ForegroundColor Green
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/listcalendarpermissions?userId=$UserID&tenantfilter=$CustomerTenantID"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $CalPerms = Invoke-RestMethod @request
 
 $CalPerms
 

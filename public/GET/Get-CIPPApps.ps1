@@ -12,7 +12,13 @@ function Get-CIPPApps {
     }
     
     Write-Host "Getting Apps for $CustomerTenantID" -ForegroundColor Green
-    $Apps = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listapps?tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/listapps?tenantfilter=$CustomerTenantID"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $Apps = Invoke-RestMethod @request
 
 $Apps
 

@@ -7,7 +7,13 @@ function Get-CIPPVersion {
     }
 
     Write-Host "Getting CIPP Version" -ForegroundColor Green
-    $Version = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/Getversion" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/Getversion"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $Version = Invoke-RestMethod @request
 
 $Version
 }

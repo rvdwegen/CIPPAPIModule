@@ -12,8 +12,14 @@ function Get-CIPPExternalTenantInfo {
     }
     
     Write-Host "Getting Tenant info for $Tenant" -ForegroundColor Green
-    $ExtTenant = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/ListExternalTenantInfo?tenant=$Tenant" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
-
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/ListExternalTenantInfo?tenant=$Tenant"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $ExtTenant = Invoke-RestMethod @request
+    
 $ExtTenant
 
 }

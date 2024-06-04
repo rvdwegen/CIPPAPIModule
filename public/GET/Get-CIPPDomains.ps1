@@ -12,7 +12,13 @@ function Get-CIPPDomains {
     }
     
     Write-Host "Getting Domains for customer: $CustomerTenantID" -ForegroundColor Green
-    $DomainList = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/ListDomains?tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/ListDomains?tenantfilter=$CustomerTenantID"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $DomainList = Invoke-RestMethod @request
 
 $DomainList
 

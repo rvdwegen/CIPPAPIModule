@@ -11,7 +11,14 @@ function Get-CIPPTenantDetails {
         break
     }
 
-    $TenantDetails = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/ListTenantDetails?tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/ListTenantDetails?tenantfilter=$CustomerTenantID"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+
+    $TenantDetails = Invoke-RestMethod @request
 
 $TenantDetails
 

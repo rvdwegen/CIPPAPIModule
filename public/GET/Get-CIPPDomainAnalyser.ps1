@@ -12,8 +12,14 @@ function Get-CIPPDomainAnalyser {
     }
     
     Write-Host "Getting Domain Analyser List for customer: $CustomerTenantID" -ForegroundColor Green
-    $DomainAnalyser = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/ListDomainAnalyser?tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
-
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/ListDomainAnalyser?tenantfilter=$CustomerTenantID"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $DomainAnalyser = Invoke-RestMethod @request
+    
 $DomainAnalyser
 
 }

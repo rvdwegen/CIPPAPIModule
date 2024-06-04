@@ -6,7 +6,13 @@ function Get-CIPPCATemplates {
         break
     }
     Write-Host "Getting Conditional Access Templates" -ForegroundColor Green
-    $CATemplates = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listcatemplates" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/listcatemplates"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $CATemplates = Invoke-RestMethod @request
 
     $CATemplates
 }

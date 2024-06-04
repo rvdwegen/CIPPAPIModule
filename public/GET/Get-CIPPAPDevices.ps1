@@ -12,8 +12,14 @@ function Get-CIPPAPDevices {
     }
 
     Write-Host "Getting AutoPilot Devices for $CustomerTenantID" -ForegroundColor Green
-    $APDevices = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listapdevices?tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
-
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/listapdevices?tenantfilter=$CustomerTenantID"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $APDevices = Invoke-RestMethod @request
+    
 $APDevices
 
 }

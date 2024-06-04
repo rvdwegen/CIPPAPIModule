@@ -49,7 +49,14 @@ function Get-CIPPDomainHealth {
         return
     }
 
-    $DomainHealth = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listdomainhealth?Domain=$DomainName&Action=$action" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/listdomainhealth?Domain=$DomainName&Action=$action"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+
+    $DomainHealth = Invoke-RestMethod @request
 
     $DomainHealth
 }

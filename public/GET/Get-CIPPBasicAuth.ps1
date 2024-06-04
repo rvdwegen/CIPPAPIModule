@@ -12,7 +12,13 @@ function Get-CIPPBasicAuth {
     }
     
     Write-Host "Getting Basic Auth for customer: $CustomerTenantID" -ForegroundColor Green
-    $BasicAuth = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listbasicauth?tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/listbasicauth?tenantfilter=$CustomerTenantID"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $BasicAuth = Invoke-RestMethod @request
 
 $BasicAuth
 

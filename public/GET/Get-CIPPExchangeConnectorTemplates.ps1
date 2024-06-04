@@ -7,7 +7,13 @@ function Get-CIPPExchangeConnectorTemplates {
     }
     
     Write-Host "Getting Exchange Connectors Templates" -ForegroundColor Green
-    $ExchangeConnectorTemplates = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listexconnectortemplates" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/listexconnectortemplates"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $ExchangeConnectorTemplates = Invoke-RestMethod @request
 
     $ExchangeConnectorTemplates
 

@@ -12,7 +12,13 @@ function Get-CIPPLicenses {
     }
     
     Write-Host "Getting Licenses for $CustomerTenantID" -ForegroundColor Green
-    $LicenseList = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/ListLicenses?tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+    $request = @{
+        Uri = "$script:CIPPAPIUrl/api/ListLicenses?tenantfilter=$CustomerTenantID"
+        Method = 'Get'
+        Headers = $script:AuthHeader
+        ContentType = 'application/json'
+    }
+    $LicenseList = Invoke-RestMethod @request
 
 $LicenseList
 
