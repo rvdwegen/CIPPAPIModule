@@ -47,13 +47,31 @@ function Get-CIPPADConnectStatus {
 
     if ($AzureADConnectSettings){
         Write-Host "Getting AD Connect Settings for: $CustomerTenantID" -ForegroundColor Green
-        $ADConnectStatus = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listazureadconnectstatus?tenantfilter=$CustomerTenantID&datatoreturn=AzureADConnectSettings" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+        $request = @{
+            URI = "$script:CIPPAPIUrl/api/listazureadconnectstatus?tenantfilter=$CustomerTenantID&datatoreturn=AzureADConnectSettings"
+            Method = 'Get'
+            Headers = $script:AuthHeader
+            ContentType = "application/json"
+        }
+        $ADConnectStatus = Invoke-RestMethod @request
     } elseif ($AzureADObjectsInError){
         Write-Host "Getting AD Connect AD Objects in Error for: $CustomerTenantID" -ForegroundColor Green
-        $ADConnectStatus = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listazureadconnectstatus?tenantfilter=$CustomerTenantID&datatoreturn=AzureADObjectsInError" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+        $request = @{
+            URI = "$script:CIPPAPIUrl/api/listazureadconnectstatus?tenantfilter=$CustomerTenantID&datatoreturn=AzureADObjectsInError"
+            Method = 'Get'
+            Headers = $script:AuthHeader
+            ContentType = "application/json"
+        }
+        $ADConnectStatus = Invoke-RestMethod @request
     } else {
         Write-Host "Getting AD Connect Status for: $CustomerTenantID" -ForegroundColor Green
-        $ADConnectStatus = Invoke-RestMethod -Uri "$script:CIPPAPIUrl/api/listazureadconnectstatus?tenantfilter=$CustomerTenantID" -Method Get -Headers $script:AuthHeader -ContentType "application/json"
+        $request = @{
+            URI = "$script:CIPPAPIUrl/api/listazureadconnectstatus?tenantfilter=$CustomerTenantID"
+            Method = 'Get'
+            Headers = $script:AuthHeader
+            ContentType = "application/json"
+        }
+        $ADConnectStatus = Invoke-RestMethod @request
     }
 
     $ADConnectStatus
