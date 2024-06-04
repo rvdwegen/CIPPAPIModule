@@ -70,22 +70,13 @@
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport = @(
-        'Get-CIPPLogs',
-        'Set-CIPPAPIDetails',
-        'Get-CIPPDomainAnalyser',
-        'Get-CIPPLicenses',
-        'Get-CIPPMailboxes',
-        'Get-CIPPTenantDetails',
-        'Get-CIPPUsers',
-        'Get-CIPPVersion',
+        'Get-CIPPADConnectStatus',
         'Get-CIPPAlerts',
-        'Get-CIPPDeviceCompliance',
         'Get-CIPPAPDevices',
         'Get-CIPPAppConsentReqs',
         'Get-CIPPApps',
         'Get-CIPPAppStatus',
         'Get-CIPPAutoPilotConfig',
-        'Get-CIPPADConnectStatus',
         'Get-CIPPBasicAuth',
         'Get-CIPPBPA',
         'Get-CIPPBPATemplates',
@@ -95,13 +86,22 @@
         'Get-CIPPContacts',
         'Get-CIPPDefenderState',
         'Get-CIPPDefenderTVM',
+        'Get-CIPPDeviceCompliance',
         'Get-CIPPDevices',
+        'Get-CIPPDomainAnalyser',
         'Get-CIPPDomainHealth',
         'Get-CIPPDomains',
         'Get-CIPPExchangeConnectors'
         'Get-CIPPExchangeConnectorTemplates'
         'Get-CIPPExternalTenantInfo'
         'Get-CIPPGroups'
+        'Get-CIPPLicenses',
+        'Get-CIPPLogs',
+        'Get-CIPPMailboxes',
+        'Get-CIPPTenantDetails',
+        'Get-CIPPUsers',
+        'Get-CIPPVersion',
+        'Set-CIPPAPIDetails'
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
