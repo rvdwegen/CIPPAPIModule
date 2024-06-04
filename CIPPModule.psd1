@@ -86,7 +86,12 @@
         'Get-CIPPAppStatus',
         'Get-CIPPAutoPilotConfig',
         'Get-CIPPADConnectStatus',
-        'Get-CIPPBasicAuth'
+        'Get-CIPPBasicAuth',
+        'Get-CIPPBPA',
+        'Get-CIPPBPATemplates'
+        #'Invoke-CIPPPreFlightCheck',
+        #'Get-TokenExpiry',
+        #'connect-CIPP'
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.

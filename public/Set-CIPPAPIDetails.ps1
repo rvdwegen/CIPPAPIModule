@@ -4,7 +4,7 @@ function Set-CIPPAPIDetails {
         [Parameter(ParameterSetName = 'CIPP', Mandatory = $true)]
         [string]$CIPPClientID,
         [Parameter(ParameterSetName = 'CIPP', Mandatory = $true)]
-        [String]$CIPPClientSecret,
+        [SecureString]$CIPPClientSecret,
         [Parameter(ParameterSetName = 'CIPP', Mandatory = $true)]
         [String]$CIPPAPIUrl,
         [Parameter(ParameterSetName = 'CIPP', Mandatory = $true)]
