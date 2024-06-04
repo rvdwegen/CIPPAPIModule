@@ -1,36 +1,20 @@
-function Get-CIPPDomains {
+Function Get-CIPPDomains {
     [CmdletBinding()]
-        Param(
-            [Parameter(Mandatory = $true)]
-            [string]$CustomerTenantID
-        )
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
-    }
-    
-    Write-Host "Getting Domains for customer: $CustomerTenantID" -ForegroundColor Green
+    param (
+        [Parameter(Mandatory = $true)]
+        [string]$CustomerTenantID
+    )
 
+    Write-Verbose "Getting Domains for customer: $CustomerTenantID"
+    
     # Define the endpoint and parameters
     $endpoint = "/api/ListDomains"
     $params = @{
         tenantfilter = $CustomerTenantID
     }
+    
+    # Use the Invoke-CIPPRequest function to make the request
+    $DomainList = Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
 
-    # Build the full URL with query parameters
-    $url = Build-Url -Endpoint $endpoint -Params $params
-
-    $request = @{
-        Uri = $url
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
-    }
-    $DomainList = Invoke-RestMethod @request
-
-$DomainList
-
+    return $DomainList
 }
-

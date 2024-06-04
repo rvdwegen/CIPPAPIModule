@@ -1,5 +1,4 @@
-function Get-TokenExpiry {
-    <#
+<#
     .SYNOPSIS
         Calculates and returns the expiry date/time of a Microsoft token.
     .DESCRIPTION
@@ -7,13 +6,11 @@ function Get-TokenExpiry {
     .OUTPUTS
         A powershell date/time object representing the token expiry.
     #>
+function Get-TokenExpiry {
     [CmdletBinding()]
     [OutputType([DateTime])]
     param (
-        # Timestamp value for token expiry. e.g 3600
-        [Parameter(
-            Mandatory = $false
-        )]
+        [Parameter(Mandatory = $false)]
         [int64]$ExpiresIn = $script:ExpiresIn
     )
     if ($script:ExpiresIn -eq $null) {

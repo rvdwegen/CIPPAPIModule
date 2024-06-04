@@ -1,4 +1,6 @@
 function Invoke-CIPPPreFlightCheck {
+    [CmdletBinding()]
+    param ()
     if ($null -eq $Script:CIPPClientID -or 
     $null -eq $Script:CIPPClientSecret -or 
     $null -eq $Script:CIPPAPIUrl -or 
@@ -8,7 +10,7 @@ function Invoke-CIPPPreFlightCheck {
     }
     Get-TokenExpiry
     if ((-not $Script:ExpiryDateTime) -or ($script:ExpiryDateTime -lt (Get-Date))) {
-        write-Host "Token expired or not found. Connecting to CIPP" -ForegroundColor Green
+        write-Verbose "Token expired or not found. Connecting to CIPP" -ForegroundColor Green
         $request = @{
             CIPPClientID = $script:CIPPClientID
             CIPPClientSecret = $script:CIPPClientSecret

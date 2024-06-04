@@ -1,20 +1,12 @@
 function Get-CIPPAlerts {
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
-    }
+    [CmdletBinding()]
+    param ()
     
-    Write-Host "Getting CIPP Alerts" -ForegroundColor Green
-    $request = @{
-        Uri = "$script:CIPPAPIUrl/api/getcippalerts"
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
-    }
-    $CIPPAlerts = Invoke-RestMethod @request
+    Write-Verbose "Getting CIPP Alerts"
 
-$CIPPAlerts
+    # Define the endpoint and parameters
+    $endpoint = "/api/getcippalerts"
+
+    Invoke-CIPPRestMethod -Endpoint $endpoint
 }
 
