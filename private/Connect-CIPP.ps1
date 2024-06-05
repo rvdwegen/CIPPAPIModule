@@ -1,4 +1,4 @@
-function  Connect-CIPP {
+function Connect-CIPP {
     [CmdletBinding()]
     Param(
         [string]$CIPPAPIUrl,
