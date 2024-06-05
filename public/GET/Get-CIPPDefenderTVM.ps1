@@ -4,22 +4,11 @@ function Get-CIPPDefenderTVM {
             [Parameter(Mandatory = $true)]
             [string]$CustomerTenantID
         )
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
-    }
     
-    Write-Host "Getting Defender TVM for customer: $CustomerTenantID" -ForegroundColor Green
-    $request = @{
-        Uri = "$script:CIPPAPIUrl/api/listdefendertvm?tenantfilter=$CustomerTenantID"
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
+    Write-Verbose "Getting Defender TVM for customer: $CustomerTenantID"
+    $endpoint = "/api/listdefendertvm"
+    $params = @{
+        tenantfilter = $CustomerTenantID
     }
-    $DefenderTVM = Invoke-RestMethod @request
-    
-    $DefenderTVM
-
+    Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
 }

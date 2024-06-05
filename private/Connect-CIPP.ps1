@@ -3,15 +3,13 @@ function  Connect-CIPP {
     Param(
         [string]$CIPPAPIUrl,
         [string]$CIPPClientID,
-        [Securestring]$CIPPClientSecret,
+        [string]$CIPPClientSecret,
         [string]$TenantID
     )
 
-    $plainClientSecret = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($script:CIPPClientSecret))
-
     $Script:AuthBody = @{
         client_id     = $script:CIPPClientID
-        client_secret = $plainClientSecret
+        client_secret = $script:CIPPClientSecret
         scope         = "api://$($script:CIPPClientID)/.default"
         grant_type    = 'client_credentials'
     }

@@ -4,22 +4,11 @@ function Get-CIPPDeviceCompliance {
             [Parameter(Mandatory = $true)]
             [string]$CustomerTenantID
         )
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
-    }
     
-    Write-Host "Getting Device Compliance for $CustomerTenantID" -ForegroundColor Green
-    $request = @{
-        Uri = "$script:CIPPAPIUrl/api/listalltenantdevicecompliance?tenantfilter=$CustomerTenantID"
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
+    Write-Verbose "Getting Device Compliance for $CustomerTenantID"
+    $endpoint = "/api/listalltenantdevicecompliance"
+    $params = @{
+        tenantfilter = $CustomerTenantID
     }
-    $DeviceCompliance = Invoke-RestMethod @request
-    
-$DeviceCompliance
-
+    Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
 }

@@ -14,7 +14,5 @@ Function Get-CIPPDomains {
     }
     
     # Use the Invoke-CIPPRequest function to make the request
-    $DomainList = Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
-
-    return $DomainList
+    Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
 }

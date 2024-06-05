@@ -20,15 +20,8 @@ function Get-CIPPDomainHealth {
             [Parameter(Mandatory = $false)]
             [switch]$TestMtaSts
         )
-
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
-    }
     
-    Write-Host "Getting Domain Health for $DomainName" -ForegroundColor Green
+    Write-Verbose "Getting Domain Health for $DomainName"
     $action = $null
     $switchCount = 0
 
@@ -49,14 +42,11 @@ function Get-CIPPDomainHealth {
         return
     }
 
-    $request = @{
-        Uri = "$script:CIPPAPIUrl/api/listdomainhealth?Domain=$DomainName&Action=$action"
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
+    $endpoint = "/api/listdomainhealth"
+    $params = @{
+        Domain = $DomainName
+        Action = $action
     }
-
-    $DomainHealth = Invoke-RestMethod @request
-
-    $DomainHealth
+    
+    Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
 }

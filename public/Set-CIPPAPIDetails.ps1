@@ -4,13 +4,13 @@ function Set-CIPPAPIDetails {
         [Parameter(ParameterSetName = 'CIPP', Mandatory = $true)]
         [string]$CIPPClientID,
         [Parameter(ParameterSetName = 'CIPP', Mandatory = $true)]
-        [SecureString]$CIPPClientSecret,
+        [String]$CIPPClientSecret,
         [Parameter(ParameterSetName = 'CIPP', Mandatory = $true)]
         [String]$CIPPAPIUrl,
         [Parameter(ParameterSetName = 'CIPP', Mandatory = $true)]
         [String]$TenantID
     )
-    write-host "Setting CIPP API Keys" -ForegroundColor Green
+    write-Verbose "Setting CIPP API Keys"
     $script:CIPPClientID = $CIPPClientID
     $script:CIPPClientSecret = $CIPPClientSecret
     $script:CIPPAPIUrl = $CIPPAPIUrl

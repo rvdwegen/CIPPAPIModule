@@ -4,23 +4,12 @@ function Get-CIPPMailboxes {
             [Parameter(Mandatory = $true)]
             [string]$CustomerTenantID
         )
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
-    }
     
-    Write-Host "Getting Mailbox List for $CustomerTenantID" -ForegroundColor Green
-    $request = @{
-        Uri = "$script:CIPPAPIUrl/api/ListMailboxes?tenantfilter=$CustomerTenantID"
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
+    Write-Verbose "Getting Mailbox List for $CustomerTenantID"
+    $endpoint = "/api/ListMailboxes"
+    $params = @{
+        tenantfilter = $CustomerTenantID
     }
-    $MailboxList = Invoke-RestMethod @request
-
-$MailboxList
-
+    Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
 }
 

@@ -1,21 +1,10 @@
 function Get-CIPPExchangeConnectorTemplates {
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
-    }
+    [CmdletBinding()]
+        Param()
+
+    Write-Verbose "Getting Exchange Connectors Templates"
+    $endpoint = "/api/listexconnectortemplates"
     
-    Write-Host "Getting Exchange Connectors Templates" -ForegroundColor Green
-    $request = @{
-        Uri = "$script:CIPPAPIUrl/api/listexconnectortemplates"
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
-    }
-    $ExchangeConnectorTemplates = Invoke-RestMethod @request
-
-    $ExchangeConnectorTemplates
-
+    Invoke-CIPPRestMethod -Endpoint $endpoint
 }
 

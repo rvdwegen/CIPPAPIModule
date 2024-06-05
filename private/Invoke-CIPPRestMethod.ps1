@@ -8,6 +8,13 @@ function Invoke-CIPPRestMethod {
         [string]$Authorization = $null
     )
 
+    try {
+        Invoke-CIPPPreFlightCheck
+    } catch {
+        Write-Error "$($_.Exception.Message)"
+        break
+    }
+
     $Headers = $script:AuthHeader
     # Assemble parameters
     $ParamCollection = [System.Web.HttpUtility]::ParseQueryString([String]::Empty)
@@ -25,13 +32,6 @@ function Invoke-CIPPRestMethod {
         Method      = $Method
         Headers     = $Headers
         ContentType = $ContentType
-    }
-
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
     }
 
     $response = Invoke-RestMethod @Request

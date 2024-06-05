@@ -4,22 +4,12 @@ function Get-CIPPExternalTenantInfo {
             [Parameter(Mandatory = $true)]
             [string]$Tenant
         )
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
+   
+    Write-Verbose "Getting Tenant info for $Tenant"
+    $endpoint = "/api/ListExternalTenantInfo"
+    $params = @{
+        tenant = $Tenant
     }
     
-    Write-Host "Getting Tenant info for $Tenant" -ForegroundColor Green
-    $request = @{
-        Uri = "$script:CIPPAPIUrl/api/ListExternalTenantInfo?tenant=$Tenant"
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
-    }
-    $ExtTenant = Invoke-RestMethod @request
-    
-$ExtTenant
-
+    Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
 }

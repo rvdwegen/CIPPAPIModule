@@ -4,22 +4,11 @@ function Get-CIPPLicenses {
             [Parameter(Mandatory = $true)]
             [string]$CustomerTenantID
         )
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
-    }
     
-    Write-Host "Getting Licenses for $CustomerTenantID" -ForegroundColor Green
-    $request = @{
-        Uri = "$script:CIPPAPIUrl/api/ListLicenses?tenantfilter=$CustomerTenantID"
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
+    Write-Verbose "Getting Licenses for $CustomerTenantID"
+    $endpoint = "/api/ListLicenses"
+    $params = @{
+        tenantfilter = $CustomerTenantID
     }
-    $LicenseList = Invoke-RestMethod @request
-
-$LicenseList
-
+    Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
 }

@@ -4,23 +4,12 @@ function Get-CIPPTenantDetails {
             [Parameter(Mandatory = $true)]
             [string]$CustomerTenantID
         )
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
+    
+    Write-Verbose "Getting Tenant Details for $CustomerTenantID"
+    $endpoint = "/api/ListTenantDetails"
+    $params = @{
+        tenantfilter = $CustomerTenantID
     }
-
-    $request = @{
-        Uri = "$script:CIPPAPIUrl/api/ListTenantDetails?tenantfilter=$CustomerTenantID"
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
-    }
-
-    $TenantDetails = Invoke-RestMethod @request
-
-$TenantDetails
-
+    Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
 }
 

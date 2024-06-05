@@ -2,24 +2,14 @@ function Get-CIPPDefenderState {
     [CmdletBinding()]
         Param(
             [Parameter(Mandatory = $true)]
-            [string]$CustomerTenantID
+            [Guid]$CustomerTenantID
         )
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
-    }
     
-    Write-Host "Getting Defender State for customer: $CustomerTenantID" -ForegroundColor Green
-    $request = @{
-        Uri = "$script:CIPPAPIUrl/api/listdefenderstate?tenantfilter=$CustomerTenantID"
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
+    Write-Verbose "Getting Defender State for customer: $CustomerTenantID"
+    $endpoint = "/api/listdefenderstate"
+    $params = @{
+        tenantfilter = $CustomerTenantID
     }
-    $DefenderState = Invoke-RestMethod @request
-    
-    $DefenderState
+    Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
 
 }

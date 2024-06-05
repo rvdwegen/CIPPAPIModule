@@ -10,51 +10,40 @@ function Get-CIPPGroups {
             [Parameter(Mandatory = $false)]
             [switch]$Owners
         )
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
-    }
+
+    $switchCount = 0
+
+    if ($Members) { $switchCount++ }
+    if ($Owners) { $switchCount++ }
+
+    if ($switchCount -gt 1) {
+        Write-Error "Only one role switch can be specified at a time."
+        return
+    } 
     
     if (-not $GroupID) {
-        Write-Host "Getting all Groups for tenant $CustomerTenantID" -ForegroundColor Green
-        $request = @{
-            Uri = "$script:CIPPAPIUrl/api/listgroups?tenantfilter=$CustomerTenantID"
-            Method = 'Get'
-            Headers = $script:AuthHeader
-            ContentType = 'application/json'
-        }
-        $Groups = Invoke-RestMethod @request
+        Write-Verbose "Getting all Groups for tenant $CustomerTenantID"
     } elseif ($GroupID -and -not $Members -and -not $Owners) {
-        Write-Host "Getting Group Details for Group $GroupID" -ForegroundColor Green
-        $request = @{
-            Uri = "$script:CIPPAPIUrl/api/listgroups?GroupId=$GroupID&tenantfilter=$CustomerTenantID"
-            Method = 'Get'
-            Headers = $script:AuthHeader
-            ContentType = 'application/json'
-        }
-        $Groups = Invoke-RestMethod @request
+        Write-Verbose "Getting Group Details for Group $GroupID"
     } elseif ($GroupID -and $Members -and -not $Owners) {
-        Write-Host "Getting Group Members for Group $GroupID" -ForegroundColor Green
-        $request = @{
-            Uri = "$script:CIPPAPIUrl/api/listgroups?GroupId=$GroupID&tenantfilter=$CustomerTenantID&members=true"
-            Method = 'Get'
-            Headers = $script:AuthHeader
-            ContentType = 'application/json'
-        }
-        $Groups = Invoke-RestMethod @request
+        Write-Verbose "Getting Group Members for Group $GroupID"
     } elseif ($GroupID -and -not $Members -and $Owners) {
-        Write-Host "Getting Group Owners for Group $GroupID" -ForegroundColor Green
-        $request = @{
-            Uri = "$script:CIPPAPIUrl/api/listgroups?GroupId=$GroupID&tenantfilter=$CustomerTenantID&owners=true"
-            Method = 'Get'
-            Headers = $script:AuthHeader
-            ContentType = 'application/json'
-        }
-        $Groups = Invoke-RestMethod @request
+        Write-Verbose "Getting Group Owners for Group $GroupID"
     } 
-    $Groups
+    $endpoint = "/api/listgroups"
+    $params = @{
+        tenantfilter = $CustomerTenantID
+        groupid = $GroupID
+    }
 
+    if ($Members) {
+        $params.members = "true"
+    }
+
+    if ($Owners) {
+        $params.owners = "true"
+    }
+
+    Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
 }
 

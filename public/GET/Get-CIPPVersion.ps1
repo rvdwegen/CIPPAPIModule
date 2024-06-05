@@ -1,20 +1,10 @@
 function Get-CIPPVersion {
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
-    }
+    [CmdletBinding()]
+        Param()
 
-    Write-Host "Getting CIPP Version" -ForegroundColor Green
-    $request = @{
-        Uri = "$script:CIPPAPIUrl/api/Getversion"
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
-    }
-    $Version = Invoke-RestMethod @request
-
-$Version
+    Write-Verbose "Getting CIPP Version"
+    $endpoint = "/api/Getversion"
+    
+    Invoke-CIPPRestMethod -Endpoint $endpoint
 }
 

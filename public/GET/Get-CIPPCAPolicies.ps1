@@ -4,22 +4,13 @@ function Get-CIPPCAPolicies {
             [Parameter(Mandatory = $true)]
             [string]$CustomerTenantID
         )
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
+    
+    Write-Verbose "Getting Conditional Access Policies for customer: $CustomerTenantID"
+    $Endpoint = "/api/listconditionalaccesspolicies"
+    $Params = @{
+        tenantfilter = $CustomerTenantID
     }
     
-    Write-Host "Getting Conditional Access Policies for customer: $CustomerTenantID" -ForegroundColor Green
-    $request = @{
-        Uri = "$script:CIPPAPIUrl/api/listconditionalaccesspolicies?tenantfilter=$CustomerTenantID"
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
-    }
-    $CAPolicies = Invoke-RestMethod @request
-
-$CAPolicies
+    Invoke-CIPPRestMethod -Endpoint $Endpoint -Params $Params
 
 }

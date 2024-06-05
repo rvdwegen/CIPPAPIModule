@@ -4,23 +4,12 @@ function Get-CIPPDevices {
             [Parameter(Mandatory = $true)]
             [string]$CustomerTenantID
         )
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
-    }
     
-    Write-Host "Getting Devices for customer: $CustomerTenantID" -ForegroundColor Green
-    $request = @{
-        Uri = "$script:CIPPAPIUrl/api/listdevices?tenantfilter=$CustomerTenantID"
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
+    Write-Verbose "Getting Devices for customer: $CustomerTenantID"
+    $endpoint = "/api/listdevices"
+    $params = @{
+        tenantfilter = $CustomerTenantID
     }
-    $Devices = Invoke-RestMethod @request
-
-    $Devices
-
+    Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
 }
 

@@ -4,23 +4,12 @@ function Get-CIPPDomainAnalyser {
             [Parameter(Mandatory = $true)]
             [string]$CustomerTenantID
         )
-    try {
-        Invoke-CIPPPreFlightCheck
-    } catch {
-        Write-Error "$($_.Exception.Message)"
-        break
-    }
     
-    Write-Host "Getting Domain Analyser List for customer: $CustomerTenantID" -ForegroundColor Green
-    $request = @{
-        Uri = "$script:CIPPAPIUrl/api/ListDomainAnalyser?tenantfilter=$CustomerTenantID"
-        Method = 'Get'
-        Headers = $script:AuthHeader
-        ContentType = 'application/json'
+    Write-Verbose "Getting Domain Analyser List for customer: $CustomerTenantID"
+    $endpoint = "/api/ListDomainAnalyser"
+    $params = @{
+        tenantfilter = $CustomerTenantID
     }
-    $DomainAnalyser = Invoke-RestMethod @request
-    
-$DomainAnalyser
-
+    Invoke-CIPPRestMethod -Endpoint $endpoint -Params $params
 }
 
