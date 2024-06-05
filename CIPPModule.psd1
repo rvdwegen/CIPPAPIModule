@@ -91,10 +91,23 @@
         'Get-CIPPDomainAnalyser',
         'Get-CIPPDomainHealth',
         'Get-CIPPDomains',
-        'Get-CIPPExchangeConnectors'
-        'Get-CIPPExchangeConnectorTemplates'
-        'Get-CIPPExternalTenantInfo'
-        'Get-CIPPGroups'
+        'Get-CIPPExchangeConnectors',
+        'Get-CIPPExchangeConnectorTemplates',
+        'Get-CIPPExternalTenantInfo',
+        'Get-CIPPGroups',
+        'Get-CIPPGroupTemplates',
+        'Get-CIPPInactiveAccounts',
+        'Get-CIPPIntuneIntents',
+        'Get-CIPPIntunePolicy',
+        'Get-CIPPIntuneTemplates',
+        'Get-CIPPKnownIPDB',
+        'Get-CIPPMailboxMobileDevices',
+        'Get-CIPPMailboxPermissions',
+        'Get-CIPPMailboxRestores',
+        'Get-CIPPMailboxRules',
+        'Get-CIPPMailboxStatistics',
+        'Get-CIPPMailQuarantine',
+        
         'Get-CIPPLicenses',
         'Get-CIPPLogs',
         'Get-CIPPMailboxes',
